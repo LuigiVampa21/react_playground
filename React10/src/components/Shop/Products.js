@@ -1,8 +1,10 @@
-
 import ProductItem from './ProductItem';
 import classes from './Products.module.css';
 
+
 const Products = (props) => {
+
+  // console.log(props.cart);
 
   const DUMMY_PRODUCTS = [
     {
@@ -24,12 +26,10 @@ const Products = (props) => {
       <h2>Buy your favorite products</h2>
       <ul>
         {DUMMY_PRODUCTS.map(product => (
+        // {props.cart.map(product => (
           <ProductItem
             key={product.id}
             product={product}
-            // title={product.title}
-            // price={product.price}
-            // description={product.description}
           />
         ))}
       </ul>
