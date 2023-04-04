@@ -10,8 +10,8 @@ const EditEvent = () => {
   const { event } = data;
 
   return (
-    <EventForm event={event} />
+    <EventForm event={event} method={'patch'} />
   )
 }
 
-export default EditEvent
+export default EditEvent;
