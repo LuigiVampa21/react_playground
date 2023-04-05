@@ -7,6 +7,8 @@ import {
   Await,
 } from 'react-router-dom';
 
+import { getAuthToken } from '../utils/auth';
+
 import EventItem from '../components/EventItem';
 import EventsList from '../components/EventsList';
 
@@ -51,10 +53,6 @@ async function loadEvents() {
   const response = await fetch('http://localhost:8080/events');
 
   if (!response.ok) {
-    // return { isError: true, message: 'Could not fetch events.' };
-    // throw new Response(JSON.stringify({ message: 'Could not fetch events.' }), {
-    //   status: 500,
-    // });
     throw json(
       { message: 'Could not fetch events.' },
       {
@@ -78,8 +76,10 @@ export async function loader({ request, params }) {
 
 export async function action({ params, request }) {
   const eventId = params.eventId;
+  const token = getAuthToken();
   const response = await fetch('http://localhost:8080/events/' + eventId, {
     method: request.method,
+    headers: {'Authorization': 'Bearer ' + token}
   });
 
   if (!response.ok) {

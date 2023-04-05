@@ -1,4 +1,4 @@
-import { json } from 'react-router-dom';
+import { json, redirect } from 'react-router-dom';
 import AuthForm from '../components/AuthForm';
 import axios from 'axios';
 
@@ -22,8 +22,14 @@ export const action = async ({ request, params }) => {
   try {
     const response = await axios.post('http://localhost:8080/' + mode, authData);
     const {data} = response
-    console.log(data);
-    return data;
+    if(mode === 'login'){
+      const {token} = data;
+      localStorage.setItem('token', token);
+      const expiration = new Date();
+      expiration.setHours(expiration.getHours() + 1);
+      localStorage.setItem('expiration', expiration);
+    }
+    return redirect('/');
   } catch (err) {
     console.log(err.response);
     throw json({message: err.response.data.message}, {status: err.response.status});
